@@ -7,7 +7,7 @@ if (-not (Test-Path -Path $PROFILE -PathType Leaf)) {
 }
 
 # Check if oh-my-posh is installed
-if (-not (Test-Path -Path $PROFILE -PathType Container)) {
+if (-not (Test-Path -Path $env:LocalAppData\Programs\oh-my-posh -PathType Container)) {
     Write-Host "oh-my-posh is not installed. Installing oh-my-posh..."
     winget install JanDeDobbeleer.OhMyPosh -s winget
 } else {
