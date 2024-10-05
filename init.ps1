@@ -6,6 +6,14 @@ if (-not (Test-Path -Path $PROFILE -PathType Leaf)) {
     Write-Host "Profile path already exists."
 }
 
+# Add oh-my-posh to the profile
+if ((Get-Content -Path $PROFILE) -notcontains "oh-my-posh init pwsh | Invoke-Expression") {
+    Write-Host "Adding oh-my-posh to the profile..."
+    Add-Content -Path $PROFILE -Value "oh-my-posh init pwsh | Invoke-Expression"
+} else {
+    Write-Host "oh-my-posh is already added to the profile."
+}
+
 # Check if oh-my-posh is installed
 if (-not (Test-Path -Path $env:LocalAppData\Programs\oh-my-posh -PathType Container)) {
     Write-Host "oh-my-posh is not installed. Installing oh-my-posh..."
