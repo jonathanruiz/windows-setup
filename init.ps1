@@ -28,3 +28,23 @@ if (-not (Test-Path -Path "C:\Windows\Fonts\FiraCodeNerdFont-Regular.ttf" -PathT
 } else {
     Write-Host "FiraCode font is already installed."
 }
+
+# Set Fira Code as the default font for Windows Terminal
+Write-Host "Setting FiraCode as the default font for Windows Terminal..."
+
+$windowsTerminalSettingsPath =  "$env:LocalAppData\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+$settings = Get-Content -Path $windowsTerminalSettingsPath -Raw | ConvertFrom-Json
+
+if (-not $settings.profiles.defaults.font) {
+    $settings.profiles.defaults | Add-Member -MemberType NoteProperty -Name font -Value @{}
+}
+
+if (-not $settings.profiles.defaults.font.face) {
+    $settings.profiles.defaults.font | Add-Member -MemberType NoteProperty -Name face -Value ""
+}
+
+if ($settings.profiles.defaults.font.face -ne "FiraCode Nerd Font") {
+    $settings.profiles.defaults.font.face = "FiraCode Nerd Font"
+}
+
+$settings | ConvertTo-Json -Depth 32 | Set-Content -Path $windowsTerminalSettingsPath
