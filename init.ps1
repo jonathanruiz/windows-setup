@@ -7,11 +7,27 @@ if (-not (Test-Path -Path $PROFILE -PathType Leaf)) {
 }
 
 # Add oh-my-posh to the profile
-if ((Get-Content -Path $PROFILE) -notcontains "oh-my-posh init pwsh | Invoke-Expression") {
+if ((Get-Content -Path $PROFILE) -notcontains 'oh-my-posh init pwsh --config $HOME\config\oh-my-posh-themes\catppuccin_mocha.omp.json | Invoke-Expression') {
     Write-Host "Adding oh-my-posh to the profile..."
-    Add-Content -Path $PROFILE -Value "oh-my-posh init pwsh | Invoke-Expression"
+    Add-Content -Path $PROFILE -Value 'oh-my-posh init pwsh --config $HOME\config\oh-my-posh-themes\catppuccin_mocha.omp.json | Invoke-Expression'
 } else {
     Write-Host "oh-my-posh is already added to the profile."
+}
+
+# Create oh-my-posh theme folder
+if (-not (Test-Path -Path $HOME\config\oh-my-posh-themes -PathType Container)) {
+    Write-Host "oh-my-posh theme folder does not exist. Creating oh-my-posh theme folder..."
+    New-Item -Path $HOME\config\oh-my-posh-themes -ItemType Directory -Force
+} else {
+    Write-Host "oh-my-posh theme folder already exists."
+}
+
+# Copy the custom theme to the oh-my-posh theme folder
+if (-not (Test-Path -Path $HOME\config\oh-my-posh-themes\catppuccin-mocha.omp.json -PathType Leaf)) {
+    Write-Host "Copying the custom theme to the oh-my-posh theme folder..."
+    Copy-Item -Path $PSScriptRoot\oh-my-posh-themes\catppuccin_mocha.omp.json -Destination $HOME\config\oh-my-posh-themes -Force
+} else {
+    Write-Host "Custom theme is already copied to the oh-my-posh theme folder."
 }
 
 # Check if oh-my-posh is installed
