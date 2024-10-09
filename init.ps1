@@ -6,6 +6,9 @@ if (-not (Test-Path -Path $PROFILE -PathType Leaf)) {
     Write-Host "Profile path already exists."
 }
 
+# Get the list of programs installed
+winget import ./winget-import.json
+
 # Add oh-my-posh to the profile
 if ((Get-Content -Path $PROFILE) -notcontains 'oh-my-posh init pwsh --config $HOME\config\oh-my-posh-themes\catppuccin_mocha.omp.json | Invoke-Expression') {
     Write-Host "Adding oh-my-posh to the profile..."
@@ -28,14 +31,6 @@ if (-not (Test-Path -Path $HOME\config\oh-my-posh-themes\catppuccin-mocha.omp.js
     Copy-Item -Path $PSScriptRoot\oh-my-posh-themes\catppuccin_mocha.omp.json -Destination $HOME\config\oh-my-posh-themes -Force
 } else {
     Write-Host "Custom theme is already copied to the oh-my-posh theme folder."
-}
-
-# Check if oh-my-posh is installed
-if (-not (Test-Path -Path $env:LocalAppData\Programs\oh-my-posh -PathType Container)) {
-    Write-Host "oh-my-posh is not installed. Installing oh-my-posh..."
-    winget install JanDeDobbeleer.OhMyPosh -s winget
-} else {
-    Write-Host "oh-my-posh is already installed."
 }
 
 # Refresh the environment variables, specifically the PATH variable
