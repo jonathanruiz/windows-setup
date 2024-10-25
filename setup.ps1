@@ -10,7 +10,7 @@ if (-not (Test-Path -Path $PROFILE -PathType Leaf)) {
 winget import ./winget-import.json
 
 # Install the Terminal-Icons PS Module
-Install-Module -Name Terminal-Icons -Repository PSGallery
+Install-Module -Name Terminal-Icons -Repository PSGallery -Scope CurrentUser
 
 # Add oh-my-posh to the profile
 if ((Get-Content -Path $PROFILE) -notcontains 'oh-my-posh init pwsh --config $HOME\config\oh-my-posh-themes\catppuccin_mocha.omp.json | Invoke-Expression') {
