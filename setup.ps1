@@ -9,6 +9,9 @@ if (-not (Test-Path -Path $PROFILE -PathType Leaf)) {
 # Get the list of programs installed
 winget import ./winget-import.json
 
+# Install the Terminal-Icons PS Module
+Install-Module -Name Terminal-Icons -Repository PSGallery
+
 # Add oh-my-posh to the profile
 if ((Get-Content -Path $PROFILE) -notcontains 'oh-my-posh init pwsh --config $HOME\config\oh-my-posh-themes\catppuccin_mocha.omp.json | Invoke-Expression') {
     Write-Host "Adding oh-my-posh to the profile..."
@@ -31,6 +34,14 @@ if (-not (Test-Path -Path $HOME\config\oh-my-posh-themes\catppuccin-mocha.omp.js
     Copy-Item -Path $PSScriptRoot\oh-my-posh-themes\catppuccin_mocha.omp.json -Destination $HOME\config\oh-my-posh-themes -Force
 } else {
     Write-Host "Custom theme is already copied to the oh-my-posh theme folder."
+}
+
+# Add the Terminal-Icons to the Profile
+if ((Get-Content -Path $PROFILE) -notcontains 'Import-Module -Name Terminal-Icons') {
+    Write-Host "Adding Terminal-Icons to profile"
+    Add-Content -Path $PROFILE -Value 'Import-Module -Name Terminal-Icons'
+} else {
+    Write-Host "Terminal-Icons is already added to profile"
 }
 
 # Refresh the environment variables, specifically the PATH variable
