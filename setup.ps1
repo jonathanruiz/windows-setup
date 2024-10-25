@@ -64,3 +64,6 @@ Write-Host "Setting FiraCode as the default font for Windows Terminal..."
 
 # Copy Windows Terminal settings
 Copy-Item .\wt-settings.json $env:LocalAppData\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+
+# Copy VS Code settings
+Copy-Item .\vsc-settings.json $env:AppData\Code\User\settings.json
